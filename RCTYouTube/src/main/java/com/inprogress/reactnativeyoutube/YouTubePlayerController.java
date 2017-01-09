@@ -10,7 +10,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 
 
 public class YouTubePlayerController implements
-        YouTubePlayer.OnInitializedListener, YouTubePlayer.PlayerStateChangeListener, YouTubePlayer.PlaybackEventListener, YouTubePlayer.OnFullscreenListener {
+        YouTubePlayer.OnInitializedListener, YouTubePlayer.PlayerStateChangeListener, YouTubePlayer.PlaybackEventListener {
 
     Context mContext;
 
@@ -28,7 +28,6 @@ public class YouTubePlayerController implements
     private boolean showInfo = true;
     private boolean loop = false;
     private boolean playInline = false;
-    private boolean fullscreen = true;
 
 
     public YouTubePlayerController(final Context mContext, YouTubeView youTubeView) {
@@ -42,10 +41,6 @@ public class YouTubePlayerController implements
             mYouTubePlayer = youTubePlayer;
             mYouTubePlayer.setPlayerStateChangeListener(this);
             mYouTubePlayer.setPlaybackEventListener(this);
-
-            // Update config
-            mYouTubePlayer.setShowFullscreenButton(fullscreen);
-
             mYouTubePlayer.setFullscreen(true);
             updateControls();
             mYouTubeView.playerViewDidBecomeReady();
@@ -158,15 +153,6 @@ public class YouTubePlayerController implements
         mYouTubeView.receivedError(errorReason.toString());
     }
 
-    @Override
-    public void onFullscreen(boolean isFullscreen) {
-
-        // When exiting full-screen mode and inline playback is not enabled
-        // then pause the video playback.
-        if (!isPlayInline() && !isFullscreen) {
-            mYouTubePlayer.pause();
-        }
-    }
 
     public void seekTo(int second) {
         if (isLoaded()) {
@@ -234,13 +220,6 @@ public class YouTubePlayerController implements
         }
     }
 
-    public void setFullscreen(boolean fullscreen) {
-        this.fullscreen = fullscreen;
-        if (isLoaded()) {
-            mYouTubePlayer.setShowFullscreenButton(fullscreen);
-        }
-    }
-
     //TODO
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
@@ -299,7 +278,4 @@ public class YouTubePlayerController implements
         return playInline;
     }
 
-    public boolean isFullscreen() {
-        return fullscreen;
-    }
 }

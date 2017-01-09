@@ -28,7 +28,6 @@ public class YouTubeManager extends SimpleViewManager<YouTubeView> {
     public static final String PROP_HIDDEN = "hidden";
     public static final String PROP_REL = "rel";
     public static final String PROP_LOOP = "loop";
-    public static final String PROP_FULLSCREEN = "fs";
 
 
     public YouTubeManager() {
@@ -52,13 +51,13 @@ public class YouTubeManager extends SimpleViewManager<YouTubeView> {
     Map getExportedCustomDirectEventTypeConstants() {
         return MapBuilder.of(
                 "error",
-                MapBuilder.of("registrationName", "onYoutubeVideoError"),
+                MapBuilder.of("registrationName", "onError"),
                 "ready",
-                MapBuilder.of("registrationName", "onYoutubeVideoReady"),
+                MapBuilder.of("registrationName", "onReady"),
                 "state",
-                MapBuilder.of("registrationName", "onYoutubeVideoChangeState"),
+                MapBuilder.of("registrationName", "onChangeState"),
                 "quality",
-                MapBuilder.of("registrationName", "onYoutubeVideoChangeQuality")
+                MapBuilder.of("registrationName", "onChangeQuality")
         );
     }
 
@@ -137,10 +136,5 @@ public class YouTubeManager extends SimpleViewManager<YouTubeView> {
         view.setShowInfo(param);
     }
 
-    @ReactProp(name = PROP_FULLSCREEN)
-    public void setPropFullscreen(
-            YouTubeView view, @Nullable Boolean param) {
-        //Log.e(PROP_FULLSCREEN,""+param);
-        view.setFullscreen(param);
-    }
+
 }
